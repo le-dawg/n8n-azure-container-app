@@ -25,3 +25,10 @@ module "storage" {
     }
   }
 }
+
+resource "azurerm_storage_container" "tfstate" {
+  name                  = "tfstate"
+  storage_account_name  = module.storage.name
+  resource_group_name   = azurerm_resource_group.this.name
+  container_access_type = "private"
+}

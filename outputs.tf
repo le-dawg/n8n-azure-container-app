@@ -33,3 +33,17 @@ output "openai_api_version" {
   value       = "2025-03-01-preview"
 }
 
+output "backend_storage_account_name" {
+  description = "Storage account that hosts the Terraform remote state container."
+  value       = module.storage.name
+}
+
+output "backend_storage_container_name" {
+  description = "Storage container used for Terraform remote state."
+  value       = azurerm_storage_container.tfstate.name
+}
+
+output "backend_resource_group_name" {
+  description = "Resource group that contains the Terraform remote state storage."
+  value       = azurerm_resource_group.this.name
+}
