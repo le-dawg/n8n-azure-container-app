@@ -1,0 +1,76 @@
+# ============================================================================
+# Development Environment Configuration
+# ============================================================================
+#
+# This is an example configuration file for the dev environment.
+# Copy this file to `dev.tfvars` and update with your actual values.
+#
+# Usage:
+#   terraform plan -var-file=envs/dev.tfvars
+#   terraform apply -var-file=envs/dev.tfvars
+#
+# IMPORTANT: Never commit the actual dev.tfvars file with real values!
+# ============================================================================
+
+# ----------------------------------------------------------------------------
+# Core Configuration
+# ----------------------------------------------------------------------------
+
+environment     = "dev"
+location        = "northeurope"  # EU data residency
+subscription_id = "00000000-0000-0000-0000-000000000000"  # REPLACE WITH YOUR SUBSCRIPTION ID
+
+enable_telemetry = false
+
+# ----------------------------------------------------------------------------
+# Feature Flags
+# ----------------------------------------------------------------------------
+
+deploy_mcp              = false  # MCP server for n8n (optional)
+enable_supabase_studio  = false  # Supabase admin UI (dev only)
+enable_supabase_storage = false  # Supabase object storage
+enable_reranker         = true   # Azure AI Foundry rerankers
+
+# ----------------------------------------------------------------------------
+# Database Configuration
+# ----------------------------------------------------------------------------
+
+postgres_sku_name               = "B_Standard_B1ms"  # Burstable (~$15/month)
+postgres_version                = 16
+postgres_storage_mb             = 32768               # 32 GB
+postgres_backup_retention_days  = 7
+
+# ----------------------------------------------------------------------------
+# RAG Configuration
+# ----------------------------------------------------------------------------
+
+embedding_dimension = 1536  # OpenAI/Cohere dimension
+embedding_provider  = "cohere"
+vector_index_type   = "ivfflat"
+
+vector_index_params = {
+  lists = 100
+}
+
+hybrid_alpha    = 0.5
+fusion_strategy = "weighted_sum"
+reranker_model  = "cohere"
+
+# ----------------------------------------------------------------------------
+# Tags
+# ----------------------------------------------------------------------------
+
+tags = {
+  environment = "dev"
+  project     = "azure-rag-stack"
+  managed_by  = "terraform"
+}
+
+# ============================================================================
+# Secrets - Provide via environment variables (TF_VAR_*)
+# ============================================================================
+# export TF_VAR_cohere_api_key="<YOUR_KEY>"
+# export TF_VAR_openai_api_key="<YOUR_KEY>"
+# export TF_VAR_laminar_api_key="<YOUR_KEY>"
+# export TF_VAR_sharepoint_tenant_id="<TENANT_ID>"
+# export TF_VAR_entra_tenant_id="<TENANT_ID>"
