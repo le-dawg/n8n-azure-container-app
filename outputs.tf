@@ -5,7 +5,7 @@ output "n8n_fqdn_url" {
 
 output "mcp_endpoint_sse" {
   description = "The sse endpoint of the MCP Server"
-  value = try("${module.container_app_mcp[0].fqdn_url}/sse", null)
+  value       = try("${module.container_app_mcp[0].fqdn_url}/sse", null)
 }
 
 output "openai_key_secret_url" {
