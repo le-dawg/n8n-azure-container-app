@@ -11,16 +11,12 @@ module "key_vault" {
   tenant_id                     = data.azurerm_client_config.current.tenant_id
 
   secrets = {
-    openai-key = {
-      name = "openai-key"
-    }
     psqladmin-password = {
       name = "psqladmin-password"
     }
   }
 
   secrets_value = {
-    openai-key         = module.openai.primary_access_key
     psqladmin-password = random_password.myadminpassword.result
   }
 

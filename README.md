@@ -1,17 +1,17 @@
 # n8n-azure-container-app
 
-This Terraform configuration deploys an **n8n** instance on **Azure Container Apps**, along with an **Azure OpenAI Service** instance configured with the **GPT-4o-mini** model. By leveraging Azure Container Apps, this setup provides a cost-effective alternative to deploying n8n on Azure Kubernetes Service (AKS), as described on the n8n [website](https://docs.n8n.io/hosting/installation/server-setups/azure/). Azure Container Apps simplify the deployment process while maintaining scalability and reducing operational overhead.
+This Terraform configuration deploys an **n8n** instance on **Azure Container Apps**, focusing on automation workloads without provisioning any Azure OpenAI resources. By leveraging Azure Container Apps, this setup provides a cost-effective alternative to deploying n8n on Azure Kubernetes Service (AKS), as described on the n8n [website](https://docs.n8n.io/hosting/installation/server-setups/azure/). Azure Container Apps simplify the deployment process while maintaining scalability and reducing operational overhead.
  
 ### Key Features:
 - **n8n Workflow Automation**: Deploys n8n, a powerful workflow automation tool, in a highly available and scalable environment using Azure Container Apps.
 - **Optional Azure MCP Server Container**: Optionally deploys an additional container app integrated with MCP/Azure, providing Azure-specific context to the agent in n8n. This container app includes an NGINX instance configured as a reverse proxy to the MCP server, ensuring seamless communication and enhanced functionality.
-- **Azure OpenAI Integration**: Provisions an Azure OpenAI Service instance with the GPT-4o-mini model, enabling advanced AI capabilities for your workflows.
+- **External AI Endpoint Ready**: Designed to consume OpenAI-compatible endpoints that are provisioned elsewhere (for example, in another Azure tenant), allowing you to plug in existing models without deploying new Azure OpenAI resources.
 - **Cost Optimization**: Utilizes Azure Container Apps to minimize costs compared to AKS, making it an ideal choice for small to medium-scale deployments.
 - **Secure Configuration**: Integrates with Azure Key Vault to securely manage sensitive information, such as API keys and secrets.
 - **Customizable Deployment**: Supports flexible configuration options for region, tags, and telemetry, allowing you to tailor the deployment to your specific needs.
 - **Azure Verified Modules**: Leverages Azure Verified Modules (AVMs) to ensure the use of well-defined, tested, and Microsoft-supported modules, enhancing reliability and maintainability.
 
-This repository was created to provide a more affordable and accessible way to host n8n in the Azure cloud, as the AKS-based solution was found to be expensive for smaller-scale use cases. This configuration offers a practical alternative, combining the power of n8n and Azure OpenAI with the cost-efficiency and simplicity of Azure Container Apps.
+This repository was created to provide a more affordable and accessible way to host n8n in the Azure cloud, as the AKS-based solution was found to be expensive for smaller-scale use cases. This configuration offers a practical alternative, combining the power of n8n with the cost-efficiency and simplicity of Azure Container Apps, while letting you reuse existing AI endpoints managed elsewhere.
 
 ## Remote State Configuration
 
@@ -54,7 +54,6 @@ Once initialized, subsequent plans and applies will read and write state directl
 | <a name="module_container_app_n8n"></a> [container\_app\_n8n](#module\_container\_app\_n8n) | Azure/avm-res-app-containerapp/azurerm | 0.4.0 |
 | <a name="module_key_vault"></a> [key\_vault](#module\_key\_vault) | Azure/avm-res-keyvault-vault/azurerm | 0.10.0 |
 | <a name="module_naming"></a> [naming](#module\_naming) | Azure/naming/azurerm | 0.4.0 |
-| <a name="module_openai"></a> [openai](#module\_openai) | Azure/avm-res-cognitiveservices-account/azurerm | 0.7.0 |
 | <a name="module_postgresql"></a> [postgresql](#module\_postgresql) | Azure/avm-res-dbforpostgresql-flexibleserver/azurerm | 0.1.4 |
 | <a name="module_storage"></a> [storage](#module\_storage) | Azure/avm-res-storage-storageaccount/azurerm | 0.5.0 |
 
@@ -85,9 +84,4 @@ Once initialized, subsequent plans and applies will read and write state directl
 |------|-------------|
 | <a name="output_mcp_endpoint_sse"></a> [mcp\_endpoint\_sse](#output\_mcp\_endpoint\_sse) | The sse endpoint of the MCP Server |
 | <a name="output_n8n_fqdn_url"></a> [n8n\_fqdn\_url](#output\_n8n\_fqdn\_url) | https url that contains ingress's fqdn, could be used to access the n8n app. |
-| <a name="output_openai_api_version"></a> [openai\_api\_version](#output\_openai\_api\_version) | The version of the OpenAI API to n8n credential. See https://learn.microsoft.com/en-us/azure/ai-services/openai/api-version-deprecation |
-| <a name="output_openai_deployment_name"></a> [openai\_deployment\_name](#output\_openai\_deployment\_name) | The name of the OpenAI deployment. |
-| <a name="output_openai_endpoint"></a> [openai\_endpoint](#output\_openai\_endpoint) | The endpoint of the OpenAI deployment. |
-| <a name="output_openai_key_secret_url"></a> [openai\_key\_secret\_url](#output\_openai\_key\_secret\_url) | https url that contains the openai key secret in the key vault. |
-| <a name="output_openai_resource_name"></a> [openai\_resource\_name](#output\_openai\_resource\_name) | The name of the OpenAI deployment. |
 <!-- END_TF_DOCS -->
