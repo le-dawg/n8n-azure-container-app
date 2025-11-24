@@ -99,7 +99,7 @@ output "key_vault_name" {
 
 output "key_vault_uri" {
   description = "URI of the Azure Key Vault."
-  value       = module.key_vault.resource_id  # Using resource_id instead of resource.vault_uri
+  value       = module.key_vault.resource_id # Using resource_id instead of resource.vault_uri
 }
 
 # ============================================================================
