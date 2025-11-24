@@ -125,26 +125,29 @@ module "n8n_container_app" {
         }
       ] : []
 
-      readiness_probe = {
-        transport             = "HTTP"
-        port                  = var.n8n_port
-        path                  = "/healthz"
-        initial_delay_seconds = 10
-        period_seconds        = 10
-        timeout_seconds       = 5
-        failure_threshold     = 3
-        success_threshold     = 1
-      }
+      readiness_probes = [
+        {
+          transport               = "HTTP"
+          port                    = var.n8n_port
+          path                    = "/healthz"
+          interval_seconds        = 10
+          timeout                 = 5
+          failure_count_threshold = 3
+          success_count_threshold = 1
+        }
+      ]
 
-      liveness_probe = {
-        transport             = "HTTP"
-        port                  = var.n8n_port
-        path                  = "/healthz"
-        initial_delay_seconds = 30
-        period_seconds        = 30
-        timeout_seconds       = 5
-        failure_threshold     = 3
-      }
+      liveness_probes = [
+        {
+          transport               = "HTTP"
+          port                    = var.n8n_port
+          path                    = "/healthz"
+          initial_delay           = 30
+          interval_seconds        = 30
+          timeout                 = 5
+          failure_count_threshold = 3
+        }
+      ]
     }
   ]
 

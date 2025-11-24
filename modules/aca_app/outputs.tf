@@ -9,12 +9,12 @@ output "id" {
 
 output "name" {
   description = "Name of the Container App."
-  value       = module.container_app.name
+  value       = try(module.container_app.resource.name, var.name)
 }
 
 output "fqdn" {
   description = "Fully qualified domain name of the Container App (if ingress is enabled)."
-  value       = try(module.container_app.fqdn, null)
+  value       = try(module.container_app.resource.ingress[0].fqdn, null)
 }
 
 output "fqdn_url" {

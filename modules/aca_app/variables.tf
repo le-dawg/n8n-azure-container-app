@@ -47,35 +47,35 @@ variable "containers" {
       name = string
       path = string
     })))
-    liveness_probe = optional(object({
-      port                  = optional(number)
-      transport             = optional(string)
-      path                  = optional(string)
-      initial_delay_seconds = optional(number)
-      period_seconds        = optional(number)
-      timeout_seconds       = optional(number)
-      failure_threshold     = optional(number)
-      success_threshold     = optional(number)
-    }))
-    readiness_probe = optional(object({
-      port                  = optional(number)
-      transport             = optional(string)
-      path                  = optional(string)
-      initial_delay_seconds = optional(number)
-      period_seconds        = optional(number)
-      timeout_seconds       = optional(number)
-      failure_threshold     = optional(number)
-      success_threshold     = optional(number)
-    }))
-    startup_probe = optional(object({
-      port                  = optional(number)
-      transport             = optional(string)
-      path                  = optional(string)
-      initial_delay_seconds = optional(number)
-      period_seconds        = optional(number)
-      timeout_seconds       = optional(number)
-      failure_threshold     = optional(number)
-    }))
+    liveness_probes = optional(list(object({
+      port                    = number
+      transport               = string
+      path                    = optional(string)
+      initial_delay           = optional(number)
+      interval_seconds        = optional(number)
+      timeout                 = optional(number)
+      failure_count_threshold = optional(number)
+      host                    = optional(string)
+    })))
+    readiness_probes = optional(list(object({
+      port                    = number
+      transport               = string
+      path                    = optional(string)
+      interval_seconds        = optional(number)
+      timeout                 = optional(number)
+      failure_count_threshold = optional(number)
+      success_count_threshold = optional(number)
+      host                    = optional(string)
+    })))
+    startup_probe = optional(list(object({
+      port                    = number
+      transport               = string
+      path                    = optional(string)
+      interval_seconds        = optional(number)
+      timeout                 = optional(number)
+      failure_count_threshold = optional(number)
+      host                    = optional(string)
+    })))
   }))
   description = <<-EOT
     List of containers to run in this Container App.
@@ -89,9 +89,11 @@ variable "containers" {
     - args: Override container command arguments (optional)
     - env: Environment variables (use secret_name for sensitive values)
     - volume_mounts: Mount points for volumes
-    - liveness_probe: Health check to restart unhealthy containers
-    - readiness_probe: Health check to route traffic only to ready containers
-    - startup_probe: Health check for slow-starting containers
+    - liveness_probes: List of health checks to restart unhealthy containers
+    - readiness_probes: List of health checks to route traffic only to ready containers
+    - startup_probe: List of health checks for slow-starting containers
+    
+    Note: Probes must be provided as lists, even for a single probe.
     
     Example:
     ```
@@ -104,6 +106,13 @@ variable "containers" {
         env = [
           { name = "PORT", value = "8080" },
           { name = "API_KEY", secret_name = "api-key" }
+        ]
+        readiness_probes = [
+          {
+            port      = 80
+            transport = "HTTP"
+            path      = "/health"
+          }
         ]
       }
     ]
