@@ -40,19 +40,19 @@ module "postgresql" {
   version = "0.1.4"
 
   # Basic Configuration
-  location                      = var.location
-  name                          = var.name
-  resource_group_name           = var.resource_group_name
-  administrator_login           = var.administrator_login
-  administrator_password        = var.administrator_password
-  enable_telemetry              = var.enable_telemetry
-  tags                          = var.tags
+  location               = var.location
+  name                   = var.name
+  resource_group_name    = var.resource_group_name
+  administrator_login    = var.administrator_login
+  administrator_password = var.administrator_password
+  enable_telemetry       = var.enable_telemetry
+  tags                   = var.tags
 
   # Server Configuration
-  server_version                = var.postgres_version
-  sku_name                      = var.sku_name
-  storage_mb                    = var.storage_mb
-  zone                          = var.availability_zone
+  server_version = var.postgres_version
+  sku_name       = var.sku_name
+  storage_mb     = var.storage_mb
+  zone           = var.availability_zone
 
   # Network Configuration
   # Note: For dev, using public access with firewall rules
@@ -83,7 +83,7 @@ module "postgresql" {
     "azure.extensions" = {
       value = "VECTOR,PG_TRGM,UNACCENT,PG_STAT_STATEMENTS"
     }
-    
+
     # Shared preload libraries (for extensions that need it)
     "shared_preload_libraries" = {
       value = "pg_stat_statements"

@@ -49,5 +49,5 @@ output "identity" {
 output "resource" {
   description = "Full Container App resource object (for advanced use cases)."
   value       = module.container_app.resource
-  sensitive   = true  # May contain sensitive configuration
+  sensitive   = true # May contain sensitive configuration
 }

@@ -47,11 +47,11 @@ module "container_app" {
 
   # Template Configuration
   template = {
-    containers    = var.containers
+    containers      = var.containers
     init_containers = var.init_containers
-    volumes       = var.volumes
-    min_replicas  = var.min_replicas
-    max_replicas  = var.max_replicas
+    volumes         = var.volumes
+    min_replicas    = var.min_replicas
+    max_replicas    = var.max_replicas
   }
 
   # Managed Identity Configuration

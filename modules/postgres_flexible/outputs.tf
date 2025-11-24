@@ -134,7 +134,7 @@ output "extension_setup_sql" {
     psql "$(terraform output -raw connection_string)"
     ```
   EOT
-  value = <<-EOT
+  value       = <<-EOT
 -- Enable pgvector for embedding storage
 CREATE EXTENSION IF NOT EXISTS vector;
 

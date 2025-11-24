@@ -35,3 +35,11 @@ override.tf.json
 # Ignore CLI configuration files
 .terraformrc
 terraform.rc
+
+# Backend configuration files (may contain secrets)
+backend.hcl
+backend-*.hcl
+
+# Temporary files
+/tmp/
+*.tmp

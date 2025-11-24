@@ -48,33 +48,33 @@ variable "containers" {
       path = string
     })))
     liveness_probe = optional(object({
-      port                    = optional(number)
-      transport               = optional(string)
-      path                    = optional(string)
-      initial_delay_seconds   = optional(number)
-      period_seconds          = optional(number)
-      timeout_seconds         = optional(number)
-      failure_threshold       = optional(number)
-      success_threshold       = optional(number)
+      port                  = optional(number)
+      transport             = optional(string)
+      path                  = optional(string)
+      initial_delay_seconds = optional(number)
+      period_seconds        = optional(number)
+      timeout_seconds       = optional(number)
+      failure_threshold     = optional(number)
+      success_threshold     = optional(number)
     }))
     readiness_probe = optional(object({
-      port                    = optional(number)
-      transport               = optional(string)
-      path                    = optional(string)
-      initial_delay_seconds   = optional(number)
-      period_seconds          = optional(number)
-      timeout_seconds         = optional(number)
-      failure_threshold       = optional(number)
-      success_threshold       = optional(number)
+      port                  = optional(number)
+      transport             = optional(string)
+      path                  = optional(string)
+      initial_delay_seconds = optional(number)
+      period_seconds        = optional(number)
+      timeout_seconds       = optional(number)
+      failure_threshold     = optional(number)
+      success_threshold     = optional(number)
     }))
     startup_probe = optional(object({
-      port                    = optional(number)
-      transport               = optional(string)
-      path                    = optional(string)
-      initial_delay_seconds   = optional(number)
-      period_seconds          = optional(number)
-      timeout_seconds         = optional(number)
-      failure_threshold       = optional(number)
+      port                  = optional(number)
+      transport             = optional(string)
+      path                  = optional(string)
+      initial_delay_seconds = optional(number)
+      period_seconds        = optional(number)
+      timeout_seconds       = optional(number)
+      failure_threshold     = optional(number)
     }))
   }))
   description = <<-EOT
@@ -142,9 +142,9 @@ variable "init_containers" {
 
 variable "volumes" {
   type = list(object({
-    name         = string
-    storage_type = optional(string)
-    storage_name = optional(string)
+    name          = string
+    storage_type  = optional(string)
+    storage_name  = optional(string)
     mount_options = optional(string)
   }))
   default     = []
@@ -209,8 +209,8 @@ variable "ingress" {
       label           = optional(string)
     })))
     custom_domain = optional(object({
-      name             = string
-      certificate_id   = string
+      name                     = string
+      certificate_id           = string
       certificate_binding_type = optional(string, "SniEnabled")
     }))
   })
@@ -310,8 +310,8 @@ variable "managed_identities" {
 
 variable "scale_rules" {
   type = list(object({
-    name = string
-    type = string  # "http", "azure-queue", "cpu", "memory", etc.
+    name     = string
+    type     = string # "http", "azure-queue", "cpu", "memory", etc.
     metadata = map(string)
   }))
   default     = null
