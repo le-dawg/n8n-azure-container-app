@@ -63,13 +63,6 @@ module "container_app" {
   # Secrets Configuration (for sensitive env vars)
   secrets = var.secrets
 
-  # Scaling Rules (if provided)
-  # Note: AVM module uses different structure, adapt as needed
-  dynamic "scale" {
-    for_each = var.scale_rules != null ? [1] : []
-    content {
-      # Custom scaling configuration
-      # This will need adjustment based on actual AVM module capabilities
-    }
-  }
+  # Note: Scaling rules configuration is limited in the current AVM module version
+  # For advanced scaling, use the underlying azurerm_container_app resource directly
 }

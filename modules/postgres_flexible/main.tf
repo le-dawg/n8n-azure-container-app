@@ -75,48 +75,16 @@ module "postgresql" {
   # Firewall Rules
   firewall_rules = var.firewall_rules
 
-  # Server Configuration Parameters
-  # These enable pgvector and other extensions needed for RAG
-  configurations = {
-    # Enable required extensions (requires server restart)
-    # Note: Some extensions may require allowlisting in Azure
-    "azure.extensions" = {
-      value = "VECTOR,PG_TRGM,UNACCENT,PG_STAT_STATEMENTS"
-    }
-
-    # Shared preload libraries (for extensions that need it)
-    "shared_preload_libraries" = {
-      value = "pg_stat_statements"
-    }
-
-    # Memory and performance tuning for vector operations
-    # Adjust based on SKU size
-    "shared_buffers" = {
-      value = var.shared_buffers_mb != null ? "${var.shared_buffers_mb}MB" : null
-    }
-
-    "work_mem" = {
-      value = var.work_mem_mb != null ? "${var.work_mem_mb}MB" : null
-    }
-
-    "maintenance_work_mem" = {
-      value = var.maintenance_work_mem_mb != null ? "${var.maintenance_work_mem_mb}MB" : null
-    }
-
-    # Increase max connections if needed
-    "max_connections" = {
-      value = var.max_connections != null ? tostring(var.max_connections) : null
-    }
-
-    # Enable query logging for troubleshooting (disable in prod for performance)
-    "log_statement" = {
-      value = var.enable_query_logging ? "all" : "none"
-    }
-
-    "log_duration" = {
-      value = var.enable_query_logging ? "on" : "off"
-    }
-  }
+  # Note: Server configuration parameters (like azure.extensions) must be set
+  # via Azure CLI or Portal after deployment, as the current AVM module version
+  # doesn't expose the configurations block. See the module README for instructions.
+  #
+  # After deployment, run:
+  # az postgres flexible-server parameter set \
+  #   --name azure.extensions \
+  #   --value VECTOR,PG_TRGM,UNACCENT,PG_STAT_STATEMENTS \
+  #   --server-name <server-name> \
+  #   --resource-group <rg-name>
 }
 
 # ============================================================================

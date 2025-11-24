@@ -82,7 +82,7 @@ output "backup_retention_days" {
 
 output "resource" {
   description = "Full PostgreSQL Flexible Server resource object (for advanced use cases)."
-  value       = module.postgresql.resource
+  value       = module.postgresql  # Return the entire module output
   sensitive   = true
 }
 
